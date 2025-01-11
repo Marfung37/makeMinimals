@@ -24,13 +24,15 @@ def make_tiny(url):
 with open("path_minimal_strict.md", "r") as trueMinFile:
     trueMinLines = trueMinFile.readlines()
 
-totalCases = int(re.search("/ (\d+)\)", trueMinLines[2]).group(1))
+totalCases = int(re.search(r"/ (\d+)\)", trueMinLines[2]).group(1))
 percents = []
 for line in trueMinLines[13::9]:
-    numCoverCases = int(re.match("(\d+)", line).group(1))
+    numCoverCases = int(re.match(r"(\d+)", line).group(1))
     percent = numCoverCases / totalCases * 100
     percent = f'{percent:.2f}% ({numCoverCases}/{totalCases})'
     percents.append(percent)
+
+
 fumenLst = re.findall("(v115@[a-zA-Z0-9?/+]*)", trueMinLines[6])
 line = makefumen(fumenLst, percents)
 
@@ -39,7 +41,5 @@ try:
 except:
     pass
 
-trueminimaloutput = open("trueminimaloutput.txt", "w")
 print("True minimal:")
 print(line)
-trueminimaloutput.write(line)
